@@ -6,7 +6,8 @@ public class Streams{
     public static void main(String [] args) {
         List<Integer> strings = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
 
-        // strings.stream().forEach(System.out::println);
+
+        // strings.stream().map(i -> i*2).filter(i -> i%2!=0).forEach(System.out::println);
 
         // stream works from spliterator and ReferencePipelineHead
         Spliterator<Integer> iterator  = strings.stream().spliterator();
@@ -25,7 +26,9 @@ public class Streams{
         //stream().map()
         MappingSpliterator<Integer,String> mappingSpliterator = new MappingSpliterator<>(NoOpSpliterator,obj -> obj.toString() + "tb");
 
-        Stream<String> stream = StreamSupport.stream(mappingSpliterator, false);
+        RepeatingSpliterator<Integer> repeatingSpliterator = new RepeatingSpliterator<>(NoOpSpliterator, 3);
+
+        Stream<Integer> stream = StreamSupport.stream(repeatingSpliterator, false);
 
         stream.forEach(System.out::println);
 
