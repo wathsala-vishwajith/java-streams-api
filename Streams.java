@@ -10,7 +10,7 @@ public class Streams{
         // strings.stream().map(i -> i*2).filter(i -> i%2!=0).forEach(System.out::println);
 
         // stream works from spliterator and ReferencePipelineHead
-        Spliterator<Integer> iterator  = strings.stream().spliterator();
+        Spliterator<Integer> iterator  = strings.stream().sorted().spliterator();
 
         // Stream<Integer> stream = StreamSupport.stream(iterator, false);
 

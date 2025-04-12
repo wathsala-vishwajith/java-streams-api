@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -42,6 +43,12 @@ public class FilteringSpliterator<T> implements Spliterator<T>{
     @Override
     public Spliterator<T> trySplit() {
         return null;
+    }
+
+    //for sorted streams, no effect on filtering.
+    @Override
+    public Comparator<? super T> getComparator(){
+        return this.spliterator.getComparator();
     }
 
 

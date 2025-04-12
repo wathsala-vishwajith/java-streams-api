@@ -13,9 +13,11 @@ public class MappingSpliterator<T,R> implements Spliterator<R>{
         this.mapper = mapper;
     }
 
+    //in stored streams since we are changing the stream in the mapping scenario we have to change the characteristics
+    //for the spliterator
     @Override
-    public int characteristics() {
-        return this.spliterator.characteristics();
+    public int characteristics() { //field of bits. each bit has a meaning 
+        return this.spliterator.characteristics() & ~Spliterator.SORTED; 
     }
 
     //we do not know the size of the stream. the collection of the objects we serve.

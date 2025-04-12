@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -39,6 +40,12 @@ public class RepeatingSpliterator<T> implements Spliterator<T>{
     @Override
     public Spliterator<T> trySplit() {
         return null;
+    }
+
+    //for sorted streams. repeating streams doesn't change the stream order
+    @Override
+    public Comparator<? super T> getComparator(){
+        return this.spliterator.getComparator();
     }
 
 }

@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -36,6 +37,12 @@ public class NoOpSpliterator<T> implements Spliterator<T>{
     @Override
     public Spliterator<T> trySplit() {
         return null;
+    }
+
+    //for sorted streams
+    @Override
+    public Comparator<? super T> getComparator(){
+        return this.spliterator.getComparator();
     }
 
 }
