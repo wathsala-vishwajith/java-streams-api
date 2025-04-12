@@ -18,9 +18,13 @@ public class Streams{
         //basically the same thing
 
         NoOpSpliterator<Integer> NoOpSpliterator  = new NoOpSpliterator<>(iterator);
+
+        //stream().filter()
+        FilteringSpliterator<Integer> filteringSpliterator = new FilteringSpliterator<>(NoOpSpliterator, s-> s % 2==0);
+
         
 
-        Stream<Integer> stream = StreamSupport.stream(NoOpSpliterator, false);
+        Stream<Integer> stream = StreamSupport.stream(filteringSpliterator, false);
 
         stream.forEach(System.out::println);
 

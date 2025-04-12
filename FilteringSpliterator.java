@@ -1,12 +1,15 @@
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
-public class NoOpSpliterator<T> implements Spliterator<T>{
+public class FilteringSpliterator<T> implements Spliterator<T>{
 
     private Spliterator<T> spliterator;
+    private Predicate<T> filter;
 
-    public NoOpSpliterator(Spliterator<T> spliterator){
+    public FilteringSpliterator(Spliterator<T> spliterator,Predicate<T> fliter){
         this.spliterator=spliterator;
+        this.filter = fliter;
     }
 
     @Override
@@ -27,7 +30,10 @@ public class NoOpSpliterator<T> implements Spliterator<T>{
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
         boolean hasMore  = this.spliterator.tryAdvance(t->{
-            action.accept(t);
+            if(filter.test(t)){
+                action.accept(t);
+            }
+            
         });
         return hasMore;
     }
@@ -37,5 +43,6 @@ public class NoOpSpliterator<T> implements Spliterator<T>{
     public Spliterator<T> trySplit() {
         return null;
     }
+
 
 }
