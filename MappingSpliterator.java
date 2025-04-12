@@ -1,13 +1,14 @@
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public class MappingSpliterator<T,R> implements Spliterator<T>{
+public class MappingSpliterator<T,R> implements Spliterator<R>{
 
     private Spliterator<T> spliterator;
-    private UnaryOperator<T> mapper;
+    private Function<T,R> mapper;
 
-    public MappingSpliterator(Spliterator<T> spliterator, UnaryOperator<T> mapper){
+    public MappingSpliterator(Spliterator<T> spliterator, Function<T,R> mapper){
         this.spliterator=spliterator;
         this.mapper = mapper;
     }
@@ -28,7 +29,7 @@ public class MappingSpliterator<T,R> implements Spliterator<T>{
     // tryAdvance is called by ReferencePiplineObject 
     //consumer is given by ReferencePipelineObject
     @Override
-    public boolean tryAdvance(Consumer<? super T> action) {
+    public boolean tryAdvance(Consumer<? super R> action) {
         boolean hasMore  = this.spliterator.tryAdvance(t->{
             action.accept(mapper.apply(t));
         });
@@ -37,7 +38,7 @@ public class MappingSpliterator<T,R> implements Spliterator<T>{
 
     //if we want to process stuff in parallel.
     @Override
-    public Spliterator<T> trySplit() {
+    public Spliterator<R> trySplit() {
         return null;
     }
 

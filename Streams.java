@@ -22,9 +22,10 @@ public class Streams{
         //stream().filter()
         FilteringSpliterator<Integer> filteringSpliterator = new FilteringSpliterator<>(NoOpSpliterator, s-> s % 2==0);
 
-        
+        //stream().map()
+        MappingSpliterator<Integer,String> mappingSpliterator = new MappingSpliterator<>(NoOpSpliterator,obj -> obj.toString() + "tb");
 
-        Stream<Integer> stream = StreamSupport.stream(filteringSpliterator, false);
+        Stream<String> stream = StreamSupport.stream(mappingSpliterator, false);
 
         stream.forEach(System.out::println);
 
