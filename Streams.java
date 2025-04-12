@@ -10,7 +10,9 @@ public class Streams{
         // strings.stream().map(i -> i*2).filter(i -> i%2!=0).forEach(System.out::println);
 
         // stream works from spliterator and ReferencePipelineHead
-        Spliterator<Integer> iterator  = strings.stream().sorted().spliterator();
+        Stream<Integer> stream1 = strings.stream();
+        stream1.onClose(()-> System.out.println("Closing the stream"));//on closing the stream
+        Spliterator<Integer> iterator  = stream1.sorted().spliterator();
 
         // Stream<Integer> stream = StreamSupport.stream(iterator, false);
 
@@ -29,8 +31,10 @@ public class Streams{
         RepeatingSpliterator<Integer> repeatingSpliterator = new RepeatingSpliterator<>(NoOpSpliterator, 3);
 
         Stream<Integer> stream = StreamSupport.stream(repeatingSpliterator, false);
+        stream.onClose((stream1::close));
 
         stream.forEach(System.out::println);
+        stream.close();
 
 
 
